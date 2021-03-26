@@ -1,23 +1,31 @@
 package com.atritripathi.ui.tasks
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.atritripathi.tasks.R
+import com.atritripathi.tasks.data.SortOrder
 import com.atritripathi.tasks.databinding.FragmentTasksBinding
 import com.atritripathi.tasks.util.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TasksFragment : Fragment(R.layout.fragment_tasks) {
 
     private val viewModel: TasksViewModel by viewModels()
+
+    private val Context.dataStore by preferencesDataStore("user_preferences")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,21 +54,26 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
         searchView.onQueryTextChanged { searchQuery ->
             viewModel.searchQuery.value = searchQuery
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            menu.findItem(R.id.action_hide_completed_tasks).isChecked =
+                viewModel.preferencesFlow.first().hideCompleted
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.action_sort_by_name -> {
-                viewModel.sortOrder.value = SortOrder.BY_NAME
+                viewModel.onSelectSortOrder(SortOrder.BY_NAME)
                 true
             }
             R.id.action_sort_by_date_created -> {
-                viewModel.sortOrder.value = SortOrder.BY_DATE
+                viewModel.onSelectSortOrder(SortOrder.BY_DATE)
                 true
             }
             R.id.action_hide_completed_tasks -> {
                 item.isChecked = !item.isChecked
-                viewModel.hideCompleted.value = item.isChecked
+                viewModel.onClickHideCompleted(item.isChecked)
                 true
             }
             R.id.action_delete_completed_tasks -> {

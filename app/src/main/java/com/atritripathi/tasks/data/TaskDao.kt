@@ -1,9 +1,8 @@
 package com.atritripathi.tasks.data
 
 import androidx.room.*
-import com.atritripathi.ui.tasks.SortOrder
-import com.atritripathi.ui.tasks.SortOrder.BY_DATE
-import com.atritripathi.ui.tasks.SortOrder.BY_NAME
+import com.atritripathi.tasks.data.SortOrder.BY_DATE
+import com.atritripathi.tasks.data.SortOrder.BY_NAME
 import kotlinx.coroutines.flow.Flow
 
 @Dao
