@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Tasks</string>
+    <string name="task_name">Task name</string>
 </resources>
