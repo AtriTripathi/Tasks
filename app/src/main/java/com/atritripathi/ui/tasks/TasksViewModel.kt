@@ -5,6 +5,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.atritripathi.tasks.data.PreferencesManager
 import com.atritripathi.tasks.data.SortOrder
+import com.atritripathi.tasks.data.Task
 import com.atritripathi.tasks.data.TaskDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,6 +32,8 @@ class TasksViewModel @Inject constructor(
         taskDao.getTasks(query, userPreferences.sortOrder, userPreferences.hideCompleted)
     }
 
+    val tasks = _tasksFlow.asLiveData()
+
     fun onSelectSortOrder(sortOrder: SortOrder) = viewModelScope.launch {
         preferencesManager.updateSortOrder(sortOrder)
     }
@@ -39,5 +42,11 @@ class TasksViewModel @Inject constructor(
         preferencesManager.updateHideCompleted(hideCompleted)
     }
 
-    val tasks = _tasksFlow.asLiveData()
+    fun onTaskSelected(task: Task) {
+
+    }
+
+    fun onTaskCheckedChanged(task: Task, isChecked: Boolean) = viewModelScope.launch {
+        taskDao.update(task.copy(isCompleted = isChecked))
+    }
 }

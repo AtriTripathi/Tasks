@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface TaskDao {
 
     fun getTasks(query: String, sortOrder: SortOrder, hideCompleted: Boolean): Flow<List<Task>> =
-        when(sortOrder) {
+        when (sortOrder) {
             BY_DATE -> getTasksSortedByDateCreated(query, hideCompleted)
             BY_NAME -> getTasksSortedByName(query, hideCompleted)
         }
