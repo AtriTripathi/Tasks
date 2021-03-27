@@ -9,6 +9,7 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,6 +20,8 @@ import com.atritripathi.tasks.R
 import com.atritripathi.tasks.data.SortOrder
 import com.atritripathi.tasks.data.Task
 import com.atritripathi.tasks.databinding.FragmentTasksBinding
+import com.atritripathi.tasks.util.KEY_ADD_EDIT_REQUEST
+import com.atritripathi.tasks.util.KEY_ADD_EDIT_RESULT
 import com.atritripathi.tasks.util.exhaustive
 import com.atritripathi.tasks.util.onQueryTextChanged
 import com.atritripathi.ui.tasks.TasksFragmentDirections.Companion.actionTasksFragmentToAddEditTaskFragment
@@ -67,6 +70,11 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TasksAdapter.OnItemClic
             viewModel.onAddNewTaskClicked()
         }
 
+        setFragmentResultListener(KEY_ADD_EDIT_REQUEST) { _, bundle ->
+            val result = bundle.getInt(KEY_ADD_EDIT_RESULT)
+            viewModel.onAddEditResult(result)
+        }
+
         viewModel.tasks.observe(viewLifecycleOwner) { tasks ->
             tasksAdapter.submitList(tasks)
         }
@@ -89,6 +97,9 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TasksAdapter.OnItemClic
                             title = "Edit Task"
                         )
                         findNavController().navigate(action)
+                    }
+                    is ShowTaskSavedMessage -> {
+                        Snackbar.make(requireView(), event.message, Snackbar.LENGTH_LONG).show()
                     }
                 }.exhaustive
             }

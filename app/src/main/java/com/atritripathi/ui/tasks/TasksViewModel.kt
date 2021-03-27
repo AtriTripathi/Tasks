@@ -5,6 +5,8 @@ import com.atritripathi.tasks.data.PreferencesManager
 import com.atritripathi.tasks.data.SortOrder
 import com.atritripathi.tasks.data.Task
 import com.atritripathi.tasks.data.TaskDao
+import com.atritripathi.tasks.util.ADD_TASK_RESULT_OK
+import com.atritripathi.tasks.util.EDIT_TASK_RESULT_OK
 import com.atritripathi.ui.tasks.TasksViewModel.TasksEvent.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -68,9 +70,21 @@ class TasksViewModel @Inject constructor(
         taskEventChannel.send(NavigateToAddTaskScreen)
     }
 
+    fun onAddEditResult(result: Int) {
+        when(result) {
+            ADD_TASK_RESULT_OK -> showTaskSavedMessage("Task added")
+            EDIT_TASK_RESULT_OK -> showTaskSavedMessage("Task updated")
+        }
+    }
+
+    private fun showTaskSavedMessage(text: String) = viewModelScope.launch {
+        taskEventChannel.send(ShowTaskSavedMessage(text))
+    }
+
     sealed class TasksEvent {
         object NavigateToAddTaskScreen : TasksEvent()
         data class NavigateToEditTaskScreen(val task: Task) : TasksEvent()
         data class ShowUndoDeleteTaskMessage(val task: Task) : TasksEvent()
+        data class ShowTaskSavedMessage(val message: String) : TasksEvent()
     }
 }
