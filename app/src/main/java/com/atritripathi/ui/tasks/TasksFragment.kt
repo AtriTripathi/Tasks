@@ -11,6 +11,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,8 +19,10 @@ import com.atritripathi.tasks.R
 import com.atritripathi.tasks.data.SortOrder
 import com.atritripathi.tasks.data.Task
 import com.atritripathi.tasks.databinding.FragmentTasksBinding
+import com.atritripathi.tasks.util.exhaustive
 import com.atritripathi.tasks.util.onQueryTextChanged
-import com.atritripathi.ui.tasks.TasksViewModel.TasksEvent.ShowUndoDeleteTaskMessage
+import com.atritripathi.ui.tasks.TasksFragmentDirections.Companion.actionTasksFragmentToAddEditTaskFragment
+import com.atritripathi.ui.tasks.TasksViewModel.TasksEvent.*
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -60,6 +63,10 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TasksAdapter.OnItemClic
             }
         }).attachToRecyclerView(binding.rvTasks)
 
+        binding.fabAddTask.setOnClickListener {
+            viewModel.onAddNewTaskClicked()
+        }
+
         viewModel.tasks.observe(viewLifecycleOwner) { tasks ->
             tasksAdapter.submitList(tasks)
         }
@@ -69,11 +76,21 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TasksAdapter.OnItemClic
                 when (event) {
                     is ShowUndoDeleteTaskMessage -> {
                         Snackbar.make(requireView(), "Task deleted", Snackbar.LENGTH_LONG)
-                            .setAction("UNDO") {
-                                viewModel.onUndoDeleteClicked(event.task)
-                            }.show()
+                            .setAction("UNDO") { viewModel.onUndoDeleteClicked(event.task) }
+                            .show()
                     }
-                }
+                    is NavigateToAddTaskScreen -> {
+                        val action = actionTasksFragmentToAddEditTaskFragment(title = "New Task")
+                        findNavController().navigate(action)
+                    }
+                    is NavigateToEditTaskScreen -> {
+                        val action = actionTasksFragmentToAddEditTaskFragment(
+                            task = event.task,
+                            title = "Edit Task"
+                        )
+                        findNavController().navigate(action)
+                    }
+                }.exhaustive
             }
         }
 
@@ -107,16 +124,16 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TasksAdapter.OnItemClic
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_sort_by_name -> {
-                viewModel.onSelectSortOrder(SortOrder.BY_NAME)
+                viewModel.onSortOrderSelected(SortOrder.BY_NAME)
                 true
             }
             R.id.action_sort_by_date_created -> {
-                viewModel.onSelectSortOrder(SortOrder.BY_DATE)
+                viewModel.onSortOrderSelected(SortOrder.BY_DATE)
                 true
             }
             R.id.action_hide_completed_tasks -> {
                 item.isChecked = !item.isChecked
-                viewModel.onClickHideCompleted(item.isChecked)
+                viewModel.onHideCompletedClicked(item.isChecked)
                 true
             }
             R.id.action_delete_completed_tasks -> {
