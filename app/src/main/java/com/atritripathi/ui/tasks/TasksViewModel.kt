@@ -8,9 +8,11 @@ import com.atritripathi.tasks.data.SortOrder
 import com.atritripathi.tasks.data.Task
 import com.atritripathi.tasks.data.TaskDao
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,6 +24,9 @@ class TasksViewModel @Inject constructor(
 
     val searchQuery = MutableStateFlow("")
     val preferencesFlow = preferencesManager.preferencesFlow
+
+    private val taskEventChannel = Channel<TasksEvent>()
+    val taskEvent = taskEventChannel.receiveAsFlow()
 
     private val _tasksFlow = combine(
         searchQuery,
@@ -48,5 +53,18 @@ class TasksViewModel @Inject constructor(
 
     fun onTaskCheckedChanged(task: Task, isChecked: Boolean) = viewModelScope.launch {
         taskDao.update(task.copy(isCompleted = isChecked))
+    }
+
+    fun onTaskSwiped(task: Task) = viewModelScope.launch {
+        taskDao.delete(task)
+        taskEventChannel.send(TasksEvent.ShowUndoDeleteTaskMessage(task))
+    }
+
+    fun onUndoDeleteClicked(task: Task) = viewModelScope.launch {
+        taskDao.insert(task)
+    }
+
+    sealed class TasksEvent {
+        data class ShowUndoDeleteTaskMessage(val task: Task) : TasksEvent()
     }
 }
