@@ -1,4 +1,4 @@
-package com.atritripathi.ui.tasks
+package com.atritripathi.tasks.ui.tasks
 
 import androidx.lifecycle.*
 import com.atritripathi.tasks.data.PreferencesManager
@@ -7,7 +7,7 @@ import com.atritripathi.tasks.data.Task
 import com.atritripathi.tasks.data.TaskDao
 import com.atritripathi.tasks.util.ADD_TASK_RESULT_OK
 import com.atritripathi.tasks.util.EDIT_TASK_RESULT_OK
-import com.atritripathi.ui.tasks.TasksViewModel.TasksEvent.*
+import com.atritripathi.tasks.ui.tasks.TasksViewModel.TasksEvent.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.combine

@@ -1,4 +1,4 @@
-package com.atritripathi.ui.deleteallcompleted
+package com.atritripathi.tasks.ui.deleteallcompleted
 
 import androidx.lifecycle.ViewModel
 import com.atritripathi.tasks.data.TaskDao

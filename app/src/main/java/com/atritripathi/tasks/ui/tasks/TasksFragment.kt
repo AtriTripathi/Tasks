@@ -1,4 +1,4 @@
-package com.atritripathi.ui.tasks
+package com.atritripathi.tasks.ui.tasks
 
 import android.content.Context
 import android.os.Bundle
@@ -20,12 +20,12 @@ import com.atritripathi.tasks.R
 import com.atritripathi.tasks.data.SortOrder
 import com.atritripathi.tasks.data.Task
 import com.atritripathi.tasks.databinding.FragmentTasksBinding
+import com.atritripathi.tasks.ui.tasks.TasksFragmentDirections.Companion.actionTasksFragmentToAddEditTaskFragment
+import com.atritripathi.tasks.ui.tasks.TasksViewModel.TasksEvent.*
 import com.atritripathi.tasks.util.KEY_ADD_EDIT_REQUEST
 import com.atritripathi.tasks.util.KEY_ADD_EDIT_RESULT
 import com.atritripathi.tasks.util.exhaustive
 import com.atritripathi.tasks.util.onQueryTextChanged
-import com.atritripathi.ui.tasks.TasksFragmentDirections.Companion.actionTasksFragmentToAddEditTaskFragment
-import com.atritripathi.ui.tasks.TasksViewModel.TasksEvent.*
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect

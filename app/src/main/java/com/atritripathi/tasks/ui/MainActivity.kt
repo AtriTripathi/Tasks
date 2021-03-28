@@ -1,4 +1,4 @@
-package com.atritripathi.ui
+package com.atritripathi.tasks.ui
 
 import android.app.Activity
 import android.os.Bundle

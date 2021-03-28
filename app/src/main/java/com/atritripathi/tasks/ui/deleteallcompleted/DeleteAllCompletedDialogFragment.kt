@@ -1,4 +1,4 @@
-package com.atritripathi.ui.deleteallcompleted
+package com.atritripathi.tasks.ui.deleteallcompleted
 
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog

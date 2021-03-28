@@ -1,4 +1,4 @@
-package com.atritripathi.ui.addedittask
+package com.atritripathi.tasks.ui.addedittask
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import com.atritripathi.tasks.data.Task
 import com.atritripathi.tasks.data.TaskDao
 import com.atritripathi.tasks.util.ADD_TASK_RESULT_OK
 import com.atritripathi.tasks.util.EDIT_TASK_RESULT_OK
-import com.atritripathi.ui.addedittask.AddEditTaskViewModel.AddEditTaskEvent.NavigateBackWithResult
+import com.atritripathi.tasks.ui.addedittask.AddEditTaskViewModel.AddEditTaskEvent.NavigateBackWithResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow

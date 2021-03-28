@@ -1,4 +1,4 @@
-package com.atritripathi.ui.tasks
+package com.atritripathi.tasks.ui.tasks
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,4 +1,4 @@
-package com.atritripathi.ui.addedittask
+package com.atritripathi.tasks.ui.addedittask
 
 import android.os.Bundle
 import android.view.View
@@ -15,8 +15,8 @@ import com.atritripathi.tasks.databinding.FragmentAddeditTaskBinding
 import com.atritripathi.tasks.util.KEY_ADD_EDIT_REQUEST
 import com.atritripathi.tasks.util.KEY_ADD_EDIT_RESULT
 import com.atritripathi.tasks.util.exhaustive
-import com.atritripathi.ui.addedittask.AddEditTaskViewModel.AddEditTaskEvent.NavigateBackWithResult
-import com.atritripathi.ui.addedittask.AddEditTaskViewModel.AddEditTaskEvent.ShowInvalidInputMessage
+import com.atritripathi.tasks.ui.addedittask.AddEditTaskViewModel.AddEditTaskEvent.NavigateBackWithResult
+import com.atritripathi.tasks.ui.addedittask.AddEditTaskViewModel.AddEditTaskEvent.ShowInvalidInputMessage
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
