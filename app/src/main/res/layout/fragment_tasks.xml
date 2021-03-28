@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.atritripathi.ui.tasks.TasksFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        app:maxImageSize="@dimen/fab_icon_size"
+        app:fabCustomSize="@dimen/fab_custom_size"
         android:src="@drawable/ic_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,30 +9,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation= "vertical"
-        android:padding="8dp">
+        android:layout_margin="16dp"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etTaskName"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Tasks.EditText.OutlineBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="no"
-            android:hint="@string/task_name"
-            android:inputType="text" />
+            android:hint="@string/task_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTaskName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:autofillHints="no"
+                android:inputType="text"
+                android:textAppearance="?attr/textAppearanceHeadline5" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <CheckBox
             android:id="@+id/cbImportant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Important task" />
+            android:layout_marginBottom="4dp"
+            android:text="Important task"
+            android:textAppearance="?attr/textAppearanceSubtitle1" />
 
         <TextView
             android:id="@+id/tvDateCreated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             tools:text="Date created: " />
-
-
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -40,6 +52,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_check_mark" />
+        android:contentDescription="@string/save_task_button"
+        android:src="@drawable/ic_check_mark"
+        app:fabCustomSize="@dimen/fab_custom_size"
+        app:maxImageSize="@dimen/fab_icon_size" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
