@@ -2,6 +2,8 @@
 
 An Android app that shows a list of tasks as a todo list, sorted by the order of importance. The user can create, edit, delete, sort and search for tasks.
 
+> You can find the debug APK file in [Releases](https://github.com/AtriTripathi/Tasks/releases).
+
 ## Screenshots
 
 <img src="./assets/screen-1.png" width="30%">&ensp;<img src="./assets/screen-2.png" width="30%">&ensp;<img src="./assets/screen-3.png" width="30%">
