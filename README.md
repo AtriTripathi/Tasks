@@ -6,7 +6,7 @@ An Android app that shows a list of tasks as a todo list, sorted by the order of
 
 <img src="./assets/screen-1.png" width="30%">&ensp;<img src="./assets/screen-2.png" width="30%">&ensp;<img src="./assets/screen-3.png" width="30%">
 
-## Architecture
+## Architecture - MVVM
 
 `MVVM (Model-View-ViewModel) Architecture` combines the advantages of separation of concerns provided by MVP, while maintaining testability. This results in a pattern where the model drives as many of the operations as possible, minimizing the logic in the view.
 
