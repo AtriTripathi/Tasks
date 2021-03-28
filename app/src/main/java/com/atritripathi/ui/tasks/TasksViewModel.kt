@@ -81,10 +81,15 @@ class TasksViewModel @Inject constructor(
         taskEventChannel.send(ShowTaskSavedMessage(text))
     }
 
+    fun onDeleteAllCompletedClicked() = viewModelScope.launch {
+        taskEventChannel.send(NavigateToDeleteAllCompletedScreen)
+    }
+
     sealed class TasksEvent {
         object NavigateToAddTaskScreen : TasksEvent()
         data class NavigateToEditTaskScreen(val task: Task) : TasksEvent()
         data class ShowUndoDeleteTaskMessage(val task: Task) : TasksEvent()
         data class ShowTaskSavedMessage(val message: String) : TasksEvent()
+        object NavigateToDeleteAllCompletedScreen : TasksEvent()
     }
 }
